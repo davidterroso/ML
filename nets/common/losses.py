@@ -21,3 +21,14 @@ class DiceTorch(TorchLoss):
         union = prediction.sum(dim=tuple(range(2, prediction.dim()))) + ground_truth.sum(dim=tuple(range(2, prediction.dim())))
         dice_coefficient = (2 * intersection + smooth) / (union + smooth)
         return 1 - dice_coefficient.mean()
+
+def get_criterion_torch(
+        loss_name: str,
+        loss_params: dict[str, float | str]
+    ) -> TorchLoss:
+    losses_dict = {
+        'dice': DiceTorch,
+    }
+    if loss_name in losses_dict:
+        return losses_dict[loss_name](**loss_params)
+    raise KeyError(f"Loss name '{loss_name}' in config does not match designed losses.")
