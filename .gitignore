@@ -56,3 +56,8 @@ Thumbs.db
 
 # uv
 uv.lock
+
+# PEM
+*.pem
+
+tmp_data/
