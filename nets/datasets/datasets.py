@@ -1,9 +1,9 @@
 from torch.utils.data import DataLoader, Dataset
 
-from nets.datasets.kvar_seg import KvarSegTorch
+from nets.datasets.kvasir_seg import KvasirSegTorch
 
 DATASETS_DICT = {
-    "kvar_seg": KvarSegTorch,
+    "kvar_seg": KvasirSegTorch,
 }
 
 def get_dataset_torch(dataset_name: str) -> Dataset:

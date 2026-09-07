@@ -1,3 +1,4 @@
+from collections.abc import Iterator
 
 import torch
 from torch.optim import SGD, Adam
@@ -6,7 +7,7 @@ from torch.optim import SGD, Adam
 def get_optimizer_torch(
         optimizer_name: str,
         optimizer_params: dict[str, float | str],
-        model_parameters: torch.nn.Parameter,
+        model_parameters: Iterator[torch.nn.Parameter],
     ) -> torch.optim.Optimizer:
     optimizers_dict = {
         'adam': Adam,

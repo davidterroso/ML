@@ -28,7 +28,7 @@ def download_zip(url, dest_folder) -> str:
     except Exception as e:
         raise RuntimeError(f"Download failed: {e}") from e
 
-def unzip_dataset(file_path: str, dest_folder: str, rm: bool=True) -> None:
+def unzip_dataset(file_path: str, dest_folder: str, rm: bool=True) -> str:
     print("Extracting data ...")
     with ZipFile(file_path, 'r') as zObject:
         zObject.extractall(dest_folder)
@@ -36,3 +36,7 @@ def unzip_dataset(file_path: str, dest_folder: str, rm: bool=True) -> None:
     if rm:
         os.remove(file_path)
         print(f"{file_path} deleted successfully!")
+
+    unzipped_folder = next(entry.name for entry in os.scandir(dest_folder) if entry.is_dir())
+
+    return str(dest_folder + unzipped_folder + os.sep)

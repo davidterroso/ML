@@ -79,7 +79,8 @@ QqszKbrAKbkTidOIijlBO8n9pu0f9GBj39ItVQGL
  
  
 def build_ca_bundle() -> str:
-    """Return a path to certifi's bundle plus our extra Sectigo certs.
+    """
+    Return a path to certifi's bundle plus our extra Sectigo certs.
  
     Cached to a file next to this module so we only write it once,
     instead of regenerating a tempfile on every download call.

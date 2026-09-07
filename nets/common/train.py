@@ -6,7 +6,7 @@ from nets.common.train_jax import run_train as run_train_jax
 from nets.common.train_torch import run_train as run_train_torch
 
 
-def load_params(model: str) -> dict[str, float | str]:
+def load_params(model: str) -> dict[str, int | float | str | dict[str, int | float | str]]:
     with open(f"nets/{model}/parameters.yaml", encoding='utf-8') as file:
         params = yaml.safe_load(file)
     return params
