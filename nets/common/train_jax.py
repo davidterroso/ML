@@ -1,4 +1,6 @@
+from nets.common.config import Config
 
-def run_train(params: dict[str, int | float | str | dict[str, int | float | str]]):
-    for epoch in range(1, params['epochs'] + 1):
-        print(f"Epoch {epoch}/{params['epochs']} completed.")
+
+def run_train(config: Config):
+    for epoch in range(1, config.epochs + 1):
+        print(f"Epoch {epoch}/{config.epochs} completed.")

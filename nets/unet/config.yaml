@@ -4,7 +4,7 @@
     "out_channels": 2
 "epochs": 100
 "batch_size": 16
-"optimizer": "adam"
+"optimizer_name": "adam"
 "optimizer_parameters":
     "lr": 1.0e-4
     "eps": 1.0e-8

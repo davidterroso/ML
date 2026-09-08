@@ -1,5 +1,6 @@
-import torch
-from torch import nn
+from typing import TypedDict
+
+from torch import cat, nn
 
 
 class DoubleConv(nn.Module):
@@ -63,7 +64,7 @@ class UpSample(nn.Module):
     
     def forward(self, x, x_down):
         x_up = self.up_conv(x)
-        x = torch.cat((x_down, x_up), 1)
+        x = cat((x_down, x_up), 1)
         x = self.conv(x)
         return x
 
@@ -95,3 +96,7 @@ class UNet(nn.Module):
         out = self.final_conv(up_4)
 
         return out
+
+class UNetParams(TypedDict):
+    in_channels: int
+    out_channels: int

@@ -1,20 +1,35 @@
-from datasets.datasets import get_dataloader_torch as get_dataloader
-from datasets.datasets import get_dataset_torch as get_dataset
+from datasets.datasets import Dataset
 
-from nets.common.losses import get_criterion_torch as get_criterion
-from nets.common.models import get_model_torch as get_model
-from nets.common.optimizer import get_optimizer_torch as get_optimizer
+from nets.common.config import Config
+from nets.common.losses import Loss
+from nets.common.models import Model
+from nets.common.optimizer import Optimizer
 
 
-def run_train(params: dict[str, int | float | str | dict[str, int | float | str]]):
+def run_train(config: Config) -> None:
 
-    model = get_model(str(params['model_name']), params['model_parameters'])
-    optimizer = get_optimizer(str(params['optimizer']), params['optimizer_parameters'], model.parameters())
-    criterion = get_criterion(str(params['loss_function']), loss_params=params['loss_params'])
-    dataset = get_dataset(params['dataset_name'])
-    dataloader = get_dataloader(dataset, params['batch_size'])
+    model = Model(
+        model_name=config.model_name,
+        model_parameters=config.model_parameters
+    ).get_model_torch()
 
-    for epoch in range(1, int(params['epochs']) + 1):
+    optimizer = Optimizer(
+        optimizer_name=config.optimizer_name,
+        optimizer_params=config.optimizer_parameters
+    ).get_optimizer_torch()
+
+    criterion = Loss(
+        loss_name=config.loss_name,
+        loss_params=config.loss_parameters
+    ).get_criterion_torch()
+
+    dataloader = Dataset(
+        dataset_name=config.dataset_name,
+        batch_size=config.batch_size
+    ).get_dataloader_torch()
+
+
+    for epoch in range(1, config.epochs + 1):
         epoch_loss = 0
         for batch in dataloader:
             inputs, ground_truth = batch
@@ -22,4 +37,4 @@ def run_train(params: dict[str, int | float | str | dict[str, int | float | str]
             prediction = model(inputs)
             batch_loss = criterion(prediction, ground_truth)
             epoch_loss += batch_loss
-        print(f"Epoch {epoch}/{params['epochs']} completed.")
+        print(f"Epoch {epoch}/{config.epochs} completed.")

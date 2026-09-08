@@ -1,15 +1,30 @@
-import torch
+from typing import cast
 
-from nets.unet.torch.unet import UNet
+from torch.nn import Module as TorchModule
 
 
-def get_model_torch(
-        model_name: str,
-        model_params: dict[str, float | str],
-    ) -> torch.nn.Module:
-    models_dict = {
-        'unet': UNet,
-    }
-    if model_name in models_dict:
-        return models_dict[model_name](**model_params)
-    raise KeyError(f"Model name '{model_name}' in config does not match designed models.")
+class Model:
+    def __init__(
+            self,
+            model_name: str,
+            model_parameters: dict[str, int | float | str]
+        ) -> None:
+
+        self.model_name = model_name
+        self.model_parameters = model_parameters
+
+
+    def get_model_torch(self) -> TorchModule:
+
+        from nets.unet.torch.unet import UNet, UNetParams
+
+        models_dict = {
+            'unet': UNet,
+        }
+
+        self.model_parameters = cast(UNetParams, self.model_parameters)
+
+        if self.model_name in models_dict:
+            return models_dict[self.model_name](**self.model_parameters)
+
+        raise KeyError(f"Model name '{self.model_name}' in config does not match designed models.")

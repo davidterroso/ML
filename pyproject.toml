@@ -23,6 +23,7 @@ dependencies = [
     "requests>=2.34.2",
     "certifi>=2026.6.17",
     "torchcodec>=0.16.0",
+    "flax>=0.10.7",
 ]
 
 [project.optional-dependencies]
