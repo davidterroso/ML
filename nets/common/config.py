@@ -9,13 +9,13 @@ class Config:
         self.dataset_name: str = self.config['dataset_name']
 
         self.model_name: str = self.config['model_name']
-        self.model_parameters: dict[str, int | float | str] = self.config['model_parameters']
+        self.model_parameters: dict[str, int | float | str] = self.config['model_parameters'] or {}
 
         self.optimizer_name: str = self.config['optimizer_name']
-        self.optimizer_parameters: dict[str, int | float | str] = self.config['optimizer_parameters']
+        self.optimizer_parameters: dict[str, int | float | str] = self.config['optimizer_parameters'] or {}
 
         self.loss_name: str = self.config['loss_name']
-        self.loss_parameters: dict[str, int | float | str] = self.config['loss_parameters']
+        self.loss_parameters: dict[str, int | float | str] = self.config['loss_parameters'] or {}
 
         self.epochs: int = self.config['epochs'] 
         self.batch_size: int = self.config['batch_size'] 

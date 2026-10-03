@@ -19,7 +19,7 @@ class Loss:
         }
         if self.loss_name in losses_dict:
             return losses_dict[self.loss_name](**self.loss_params)
-        raise KeyError(f"Loss name '{self.loss_name}' in config does not match designed losses.")
+        raise ValueError(f"Loss name '{self.loss_name}' in config does not match designed losses.")
 
 
 class DiceTorch(TorchModule):

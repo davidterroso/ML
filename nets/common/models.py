@@ -27,4 +27,4 @@ class Model:
         if self.model_name in models_dict:
             return models_dict[self.model_name](**self.model_parameters)
 
-        raise KeyError(f"Model name '{self.model_name}' in config does not match designed models.")
+        raise ValueError(f"Model name '{self.model_name}' in config does not match designed models.")

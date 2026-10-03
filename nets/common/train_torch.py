@@ -1,9 +1,8 @@
-from datasets.datasets import Dataset
-
 from nets.common.config import Config
 from nets.common.losses import Loss
 from nets.common.models import Model
 from nets.common.optimizer import Optimizer
+from nets.datasets.datasets import Dataset
 
 
 def run_train(config: Config) -> None:
@@ -15,7 +14,8 @@ def run_train(config: Config) -> None:
 
     optimizer = Optimizer(
         optimizer_name=config.optimizer_name,
-        optimizer_params=config.optimizer_parameters
+        optimizer_params=config.optimizer_parameters,
+        model_params=model.parameters()
     ).get_optimizer_torch()
 
     criterion = Loss(
@@ -23,15 +23,19 @@ def run_train(config: Config) -> None:
         loss_params=config.loss_parameters
     ).get_criterion_torch()
 
-    dataloader = Dataset(
+    dataset = Dataset(
         dataset_name=config.dataset_name,
         batch_size=config.batch_size
-    ).get_dataloader_torch()
+    )
+    dataset.build_dataset_torch()
+    dataloader = dataset.get_dataloader_torch()
 
 
     for epoch in range(1, config.epochs + 1):
         epoch_loss = 0
         for batch in dataloader:
+            print(batch)
+            break
             inputs, ground_truth = batch
             optimizer.zero_grad()
             prediction = model(inputs)
