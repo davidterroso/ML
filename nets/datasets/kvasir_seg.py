@@ -30,8 +30,10 @@ def _init_data(
     return unzipped_folder, images_df, masks_df
 
 class KvasirSegTorch(Dataset):
-    def __init__(self, device: str="cpu"):
+    def __init__(self, train: bool, device: str="cpu"):
         super().__init__()
+        self.train = train
+
         self.device = device
 
         self.data_folder = f".{os.sep}tmp_data{os.sep}"
